@@ -7,40 +7,44 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A1B2C3D4E5F6789012345678 /* MempoolVisionOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6789012345679 /* MempoolVisionOSApp.swift */; };
-		A1B2C3D4E5F678901234567A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F678901234567B /* ContentView.swift */; };
-		A1B2C3D4E5F678901234567C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F678901234567D /* Assets.xcassets */; };
-		A1B2C3D4E5F678901234567E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F678901234567F /* Preview Assets.xcassets */; };
-		A1B2C3D4E5F6789012345680 /* Blockchain3DView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6789012345681 /* Blockchain3DView.swift */; };
-		A1B2C3D4E5F6789012345682 /* BlockEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6789012345683 /* BlockEntity.swift */; };
-		A1B2C3D4E5F6789012345684 /* TransactionFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6789012345685 /* TransactionFlow.swift */; };
-		A1B2C3D4E5F6789012345686 /* UTXOVisualizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6789012345687 /* UTXOVisualizer.swift */; };
-		A1B2C3D4E5F6789012345688 /* MempoolService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6789012345689 /* MempoolService.swift */; };
-		A1B2C3D4E5F678901234568A /* BlockchainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F678901234568B /* BlockchainViewModel.swift */; };
-		A1B2C3D4E5F678901234568C /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F678901234568D /* Block.swift */; };
-		A1B2C3D4E5F678901234568E /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F678901234568F /* Transaction.swift */; };
-		A1B2C3D4E5F6789012345690 /* UTXO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6789012345691 /* UTXO.swift */; };
+		00175B0F2E51570F003D45DF /* BlockchainImmersiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00175B0E2E51570F003D45DF /* BlockchainImmersiveView.swift */; };
+		00175B112E51571A003D45DF /* Blockchain3DView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00175B102E51571A003D45DF /* Blockchain3DView.swift */; };
+		B1C2D3E4F5A678901234567890123456 /* MempoolVisionOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A678901234567890123457 /* MempoolVisionOSApp.swift */; };
+		B1C2D3E4F5A678901234567890123458 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A678901234567890123459 /* ContentView.swift */; };
+		B1C2D3E4F5A67890123456789012345A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A67890123456789012345B /* Assets.xcassets */; };
+		B1C2D3E4F5A67890123456789012345C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A67890123456789012345D /* Preview Assets.xcassets */; };
+		B1C2D3E4F5A67890123456789012345E /* MempoolService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A67890123456789012345F /* MempoolService.swift */; };
+		B1C2D3E4F5A678901234567890123460 /* BlockchainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A678901234567890123461 /* BlockchainViewModel.swift */; };
+		B1C2D3E4F5A678901234567890123462 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A678901234567890123463 /* Block.swift */; };
+		B1C2D3E4F5A678901234567890123464 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A678901234567890123465 /* Transaction.swift */; };
+		B1C2D3E4F5A678901234567890123466 /* UTXO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A678901234567890123467 /* UTXO.swift */; };
+		B1C2D3E4F5A678901234567890123468 /* BlockchainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A678901234567890123469 /* BlockchainView.swift */; };
+		B1C2D3E4F5A67890123456789012346A /* MempoolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A67890123456789012346B /* MempoolView.swift */; };
+		B1C2D3E4F5A67890123456789012346C /* TransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A67890123456789012346D /* TransactionView.swift */; };
+		B1C2D3E4F5A67890123456789012346E /* UTXOView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A67890123456789012346F /* UTXOView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		A1B2C3D4E5F6789012345679 /* MempoolVisionOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MempoolVisionOSApp.swift; sourceTree = "<group>"; };
-		A1B2C3D4E5F678901234567B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		A1B2C3D4E5F678901234567D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		A1B2C3D4E5F678901234567F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		A1B2C3D4E5F6789012345681 /* Blockchain3DView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Blockchain3DView.swift; sourceTree = "<group>"; };
-		A1B2C3D4E5F6789012345683 /* BlockEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockEntity.swift; sourceTree = "<group>"; };
-		A1B2C3D4E5F6789012345685 /* TransactionFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionFlow.swift; sourceTree = "<group>"; };
-		A1B2C3D4E5F6789012345687 /* UTXOVisualizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UTXOVisualizer.swift; sourceTree = "<group>"; };
-		A1B2C3D4E5F6789012345689 /* MempoolService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MempoolService.swift; sourceTree = "<group>"; };
-		A1B2C3D4E5F678901234568B /* BlockchainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockchainViewModel.swift; sourceTree = "<group>"; };
-		A1B2C3D4E5F678901234568D /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
-		A1B2C3D4E5F678901234568F /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
-		A1B2C3D4E5F6789012345691 /* UTXO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UTXO.swift; sourceTree = "<group>"; };
-		A1B2C3D4E5F6789012345692 /* MempoolVisionOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MempoolVisionOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		00175B0E2E51570F003D45DF /* BlockchainImmersiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockchainImmersiveView.swift; sourceTree = "<group>"; };
+		00175B102E51571A003D45DF /* Blockchain3DView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Blockchain3DView.swift; sourceTree = "<group>"; };
+		B1C2D3E4F5A678901234567890123457 /* MempoolVisionOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MempoolVisionOSApp.swift; sourceTree = "<group>"; };
+		B1C2D3E4F5A678901234567890123459 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		B1C2D3E4F5A67890123456789012345B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B1C2D3E4F5A67890123456789012345D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		B1C2D3E4F5A67890123456789012345F /* MempoolService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MempoolService.swift; sourceTree = "<group>"; };
+		B1C2D3E4F5A678901234567890123461 /* BlockchainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockchainViewModel.swift; sourceTree = "<group>"; };
+		B1C2D3E4F5A678901234567890123463 /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
+		B1C2D3E4F5A678901234567890123465 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
+		B1C2D3E4F5A678901234567890123467 /* UTXO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UTXO.swift; sourceTree = "<group>"; };
+		B1C2D3E4F5A678901234567890123469 /* BlockchainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockchainView.swift; sourceTree = "<group>"; };
+		B1C2D3E4F5A67890123456789012346B /* MempoolView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MempoolView.swift; sourceTree = "<group>"; };
+		B1C2D3E4F5A67890123456789012346D /* TransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionView.swift; sourceTree = "<group>"; };
+		B1C2D3E4F5A67890123456789012346F /* UTXOView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UTXOView.swift; sourceTree = "<group>"; };
+		B1C2D3E4F5A678901234567890123470 /* MempoolVisionOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MempoolVisionOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		A1B2C3D4E5F6789012345693 /* Frameworks */ = {
+		B1C2D3E4F5A678901234567890123471 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -50,100 +54,102 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A1B2C3D4E5F6789012345694 /* MempoolVisionOS */ = {
+		B1C2D3E4F5A678901234567890123472 /* MempoolVisionOS */ = {
 			isa = PBXGroup;
 			children = (
-				A1B2C3D4E5F6789012345679 /* MempoolVisionOSApp.swift */,
-				A1B2C3D4E5F678901234567B /* ContentView.swift */,
-				A1B2C3D4E5F6789012345695 /* Models */,
-				A1B2C3D4E5F6789012345696 /* Views */,
-				A1B2C3D4E5F6789012345697 /* ViewModels */,
-				A1B2C3D4E5F6789012345698 /* Services */,
-				A1B2C3D4E5F6789012345699 /* Components */,
-				A1B2C3D4E5F678901234567D /* Assets.xcassets */,
-				A1B2C3D4E5F678901234569A /* Preview Content */,
+				B1C2D3E4F5A678901234567890123457 /* MempoolVisionOSApp.swift */,
+				B1C2D3E4F5A678901234567890123459 /* ContentView.swift */,
+				B1C2D3E4F5A678901234567890123473 /* Models */,
+				B1C2D3E4F5A678901234567890123474 /* Views */,
+				B1C2D3E4F5A678901234567890123475 /* ViewModels */,
+				B1C2D3E4F5A678901234567890123476 /* Services */,
+				B1C2D3E4F5A678901234567890123477 /* Components */,
+				B1C2D3E4F5A67890123456789012345B /* Assets.xcassets */,
+				B1C2D3E4F5A678901234567890123478 /* Preview Content */,
 			);
 			path = MempoolVisionOS;
 			sourceTree = "<group>";
 		};
-		A1B2C3D4E5F6789012345695 /* Models */ = {
+		B1C2D3E4F5A678901234567890123473 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				A1B2C3D4E5F678901234568D /* Block.swift */,
-				A1B2C3D4E5F678901234568F /* Transaction.swift */,
-				A1B2C3D4E5F6789012345691 /* UTXO.swift */,
+				B1C2D3E4F5A678901234567890123463 /* Block.swift */,
+				B1C2D3E4F5A678901234567890123465 /* Transaction.swift */,
+				B1C2D3E4F5A678901234567890123467 /* UTXO.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
 		};
-		A1B2C3D4E5F6789012345696 /* Views */ = {
+		B1C2D3E4F5A678901234567890123474 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				A1B2C3D4E5F6789012345681 /* Blockchain3DView.swift */,
+				B1C2D3E4F5A678901234567890123469 /* BlockchainView.swift */,
+				00175B0E2E51570F003D45DF /* BlockchainImmersiveView.swift */,
+				00175B102E51571A003D45DF /* Blockchain3DView.swift */,
+				B1C2D3E4F5A67890123456789012346B /* MempoolView.swift */,
+				B1C2D3E4F5A67890123456789012346D /* TransactionView.swift */,
+				B1C2D3E4F5A67890123456789012346F /* UTXOView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
 		};
-		A1B2C3D4E5F6789012345697 /* ViewModels */ = {
+		B1C2D3E4F5A678901234567890123475 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				A1B2C3D4E5F678901234568B /* BlockchainViewModel.swift */,
+				B1C2D3E4F5A678901234567890123461 /* BlockchainViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
-		A1B2C3D4E5F6789012345698 /* Services */ = {
+		B1C2D3E4F5A678901234567890123476 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				A1B2C3D4E5F6789012345689 /* MempoolService.swift */,
+				B1C2D3E4F5A67890123456789012345F /* MempoolService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
 		};
-		A1B2C3D4E5F6789012345699 /* Components */ = {
+		B1C2D3E4F5A678901234567890123477 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				A1B2C3D4E5F6789012345683 /* BlockEntity.swift */,
-				A1B2C3D4E5F6789012345685 /* TransactionFlow.swift */,
-				A1B2C3D4E5F6789012345687 /* UTXOVisualizer.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
 		};
-		A1B2C3D4E5F678901234569A /* Preview Content */ = {
+		B1C2D3E4F5A678901234567890123478 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				A1B2C3D4E5F678901234567F /* Preview Assets.xcassets */,
+				B1C2D3E4F5A67890123456789012345D /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		A1B2C3D4E5F678901234569B /* Products */ = {
+		B1C2D3E4F5A678901234567890123479 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A1B2C3D4E5F6789012345692 /* MempoolVisionOS.app */,
+				B1C2D3E4F5A678901234567890123470 /* MempoolVisionOS.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A1B2C3D4E5F678901234569C = {
+		B1C2D3E4F5A67890123456789012347A = {
 			isa = PBXGroup;
 			children = (
-				A1B2C3D4E5F6789012345694 /* MempoolVisionOS */,
-				A1B2C3D4E5F678901234569B /* Products */,
+				B1C2D3E4F5A678901234567890123472 /* MempoolVisionOS */,
+				B1C2D3E4F5A678901234567890123479 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A1B2C3D4E5F678901234569D /* MempoolVisionOS */ = {
+		B1C2D3E4F5A67890123456789012347B /* MempoolVisionOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A1B2C3D4E5F678901234569E /* Build configuration list for PBXNativeTarget "MempoolVisionOS" */;
+			buildConfigurationList = B1C2D3E4F5A67890123456789012347C /* Build configuration list for PBXNativeTarget "MempoolVisionOS" */;
 			buildPhases = (
-				A1B2C3D4E5F678901234569F /* Sources */,
-				A1B2C3D4E5F6789012345693 /* Frameworks */,
-				A1B2C3D4E5F67890123456A0 /* Resources */,
+				B1C2D3E4F5A67890123456789012347D /* Sources */,
+				B1C2D3E4F5A678901234567890123471 /* Frameworks */,
+				B1C2D3E4F5A67890123456789012347E /* Resources */,
 			);
 			buildRules = (
 			);
@@ -151,25 +157,25 @@
 			);
 			name = MempoolVisionOS;
 			productName = MempoolVisionOS;
-			productReference = A1B2C3D4E5F6789012345692 /* MempoolVisionOS.app */;
+			productReference = B1C2D3E4F5A678901234567890123470 /* MempoolVisionOS.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		A1B2C3D4E5F67890123456A1 /* Project object */ = {
+		B1C2D3E4F5A67890123456789012347F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1500;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
-					A1B2C3D4E5F678901234569D = {
+					B1C2D3E4F5A67890123456789012347B = {
 						CreatedOnToolsVersion = 15.0;
 					};
 				};
 			};
-			buildConfigurationList = A1B2C3D4E5F67890123456A2 /* Build configuration list for PBXProject "MempoolVisionOS" */;
+			buildConfigurationList = B1C2D3E4F5A678901234567890123480 /* Build configuration list for PBXProject "MempoolVisionOS" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -177,51 +183,53 @@
 				en,
 				Base,
 			);
-			mainGroup = A1B2C3D4E5F678901234569C;
-			productRefGroup = A1B2C3D4E5F678901234569B /* Products */;
+			mainGroup = B1C2D3E4F5A67890123456789012347A;
+			productRefGroup = B1C2D3E4F5A678901234567890123479 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A1B2C3D4E5F678901234569D /* MempoolVisionOS */,
+				B1C2D3E4F5A67890123456789012347B /* MempoolVisionOS */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		A1B2C3D4E5F67890123456A0 /* Resources */ = {
+		B1C2D3E4F5A67890123456789012347E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A1B2C3D4E5F678901234567E /* Preview Assets.xcassets in Resources */,
-				A1B2C3D4E5F678901234567C /* Assets.xcassets in Resources */,
+				B1C2D3E4F5A67890123456789012345C /* Preview Assets.xcassets in Resources */,
+				B1C2D3E4F5A67890123456789012345A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		A1B2C3D4E5F678901234569F /* Sources */ = {
+		B1C2D3E4F5A67890123456789012347D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A1B2C3D4E5F678901234567A /* ContentView.swift in Sources */,
-				A1B2C3D4E5F6789012345680 /* Blockchain3DView.swift in Sources */,
-				A1B2C3D4E5F6789012345682 /* BlockEntity.swift in Sources */,
-				A1B2C3D4E5F6789012345684 /* TransactionFlow.swift in Sources */,
-				A1B2C3D4E5F6789012345686 /* UTXOVisualizer.swift in Sources */,
-				A1B2C3D4E5F6789012345688 /* MempoolService.swift in Sources */,
-				A1B2C3D4E5F678901234568A /* BlockchainViewModel.swift in Sources */,
-				A1B2C3D4E5F678901234568C /* Block.swift in Sources */,
-				A1B2C3D4E5F678901234568E /* Transaction.swift in Sources */,
-				A1B2C3D4E5F6789012345690 /* UTXO.swift in Sources */,
-				A1B2C3D4E5F6789012345678 /* MempoolVisionOSApp.swift in Sources */,
+				B1C2D3E4F5A678901234567890123458 /* ContentView.swift in Sources */,
+				B1C2D3E4F5A67890123456789012345E /* MempoolService.swift in Sources */,
+				00175B0F2E51570F003D45DF /* BlockchainImmersiveView.swift in Sources */,
+				B1C2D3E4F5A678901234567890123460 /* BlockchainViewModel.swift in Sources */,
+				B1C2D3E4F5A678901234567890123462 /* Block.swift in Sources */,
+				B1C2D3E4F5A678901234567890123464 /* Transaction.swift in Sources */,
+				B1C2D3E4F5A678901234567890123466 /* UTXO.swift in Sources */,
+				B1C2D3E4F5A678901234567890123468 /* BlockchainView.swift in Sources */,
+				B1C2D3E4F5A67890123456789012346A /* MempoolView.swift in Sources */,
+				B1C2D3E4F5A67890123456789012346C /* TransactionView.swift in Sources */,
+				B1C2D3E4F5A67890123456789012346E /* UTXOView.swift in Sources */,
+				B1C2D3E4F5A678901234567890123456 /* MempoolVisionOSApp.swift in Sources */,
+				00175B112E51571A003D45DF /* Blockchain3DView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		A1B2C3D4E5F67890123456A3 /* Debug */ = {
+		B1C2D3E4F5A678901234567890123481 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -273,18 +281,21 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
+				SDKROOT = xros;
+				SUPPORTED_PLATFORMS = "xros xrsimulator";
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 7;
+				XROS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Debug;
 		};
-		A1B2C3D4E5F67890123456A4 /* Release */ = {
+		B1C2D3E4F5A678901234567890123482 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -330,17 +341,19 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				SDKROOT = iphoneos;
+				SDKROOT = xros;
+				SUPPORTED_PLATFORMS = "xros xrsimulator";
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_COMPILATION_MODE = wholemodule;
-				VALIDATE_PRODUCT = YES;
+				TARGETED_DEVICE_FAMILY = 7;
+				XROS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;
 		};
-		A1B2C3D4E5F67890123456A5 /* Debug */ = {
+		B1C2D3E4F5A678901234567890123483 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -355,26 +368,20 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mempool.space.visionOS;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mempool.visionos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "visionos xros xrsimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 7;
-				XROS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Debug;
 		};
-		A1B2C3D4E5F67890123456A6 /* Release */ = {
+		B1C2D3E4F5A678901234567890123484 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -389,47 +396,41 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mempool.space.visionOS;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mempool.visionos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "visionos xros xrsimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 7;
-				XROS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A1B2C3D4E5F678901234569E /* Build configuration list for PBXNativeTarget "MempoolVisionOS" */ = {
+		B1C2D3E4F5A67890123456789012347C /* Build configuration list for PBXNativeTarget "MempoolVisionOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A1B2C3D4E5F67890123456A5 /* Debug */,
-				A1B2C3D4E5F67890123456A6 /* Release */,
+				B1C2D3E4F5A678901234567890123483 /* Debug */,
+				B1C2D3E4F5A678901234567890123484 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A1B2C3D4E5F67890123456A2 /* Build configuration list for PBXProject "MempoolVisionOS" */ = {
+		B1C2D3E4F5A678901234567890123480 /* Build configuration list for PBXProject "MempoolVisionOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A1B2C3D4E5F67890123456A3 /* Debug */,
-				A1B2C3D4E5F67890123456A4 /* Release */,
+				B1C2D3E4F5A678901234567890123481 /* Debug */,
+				B1C2D3E4F5A678901234567890123482 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = A1B2C3D4E5F67890123456A1 /* Project object */;
+	rootObject = B1C2D3E4F5A67890123456789012347F /* Project object */;
 }

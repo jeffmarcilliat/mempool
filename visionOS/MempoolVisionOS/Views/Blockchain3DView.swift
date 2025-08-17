@@ -4,8 +4,7 @@ import Combine
 
 struct Blockchain3DView: View {
     @ObservedObject var viewModel: BlockchainViewModel
-    @State private var scene: RealityKit.Scene?
-    @State private var cameraAnchor: AnchorEntity?
+    @State private var rootEntity: Entity?
     
     var body: some View {
         ZStack {
@@ -74,78 +73,66 @@ struct Blockchain3DView: View {
                 .padding()
             }
         }
-        .onAppear {
-            setupInitialScene()
-        }
     }
     
     // MARK: - Scene Setup
     
     private func setupScene(content: RealityViewContent) {
-        // Create main scene
-        let scene = RealityKit.Scene()
+        // Create main root entity
+        let rootEntity = Entity()
+        rootEntity.name = "BlockchainRoot"
         
         // Add lighting
         let directionalLight = DirectionalLight()
         directionalLight.light.intensity = 1000
-        directionalLight.look(at: [0, 0, 0], from: [5, 5, 5], relativeTo: nil)
-        scene.addChild(directionalLight)
+        directionalLight.position = SIMD3<Float>(5, 5, 5)
+        rootEntity.addChild(directionalLight)
         
         // Add ambient light
         let ambientLight = DirectionalLight()
         ambientLight.light.intensity = 200
-        ambientLight.look(at: [0, 0, 0], from: [0, 1, 0], relativeTo: nil)
-        scene.addChild(ambientLight)
+        ambientLight.position = SIMD3<Float>(0, 1, 0)
+        rootEntity.addChild(ambientLight)
         
-        // Create camera anchor
-        let cameraAnchor = AnchorEntity(.camera)
-        let camera = PerspectiveCamera()
-        cameraAnchor.addChild(camera)
-        scene.addChild(cameraAnchor)
+        // Store reference
+        self.rootEntity = rootEntity
         
-        // Store references
-        self.scene = scene
-        self.cameraAnchor = cameraAnchor
-        
-        content.add(scene)
-    }
-    
-    private func setupInitialScene() {
-        // Initial scene setup will be handled in updateScene
+        content.add(rootEntity)
     }
     
     private func updateScene(content: RealityViewContent) {
-        guard let scene = scene else { return }
+        guard let rootEntity = rootEntity else { return }
         
         // Clear existing blockchain entities
-        scene.children.removeAll { entity in
-            entity.name.hasPrefix("block_") || entity.name.hasPrefix("chain_")
+        rootEntity.children.removeAll { entity in
+            entity.name.hasPrefix("block_") || entity.name.hasPrefix("chain_") || 
+            entity.name.hasPrefix("mempool_") || entity.name.hasPrefix("fee_") ||
+            entity.name.hasPrefix("detail_") || entity.name.hasPrefix("utxo_")
         }
         
         // Add blockchain visualization based on current view
         switch viewModel.currentView {
         case .chain:
-            addBlockchainChain(to: scene)
+            addBlockchainChain(to: rootEntity)
         case .mempool:
-            addMempoolVisualization(to: scene)
+            addMempoolVisualization(to: rootEntity)
         case .feeMarket:
-            addFeeMarketVisualization(to: scene)
+            addFeeMarketVisualization(to: rootEntity)
         case .blockDetail:
-            addBlockDetailVisualization(to: scene)
+            addBlockDetailVisualization(to: rootEntity)
         case .transactionDetail:
-            addTransactionDetailVisualization(to: scene)
+            addTransactionDetailVisualization(to: rootEntity)
         case .utxoExplorer:
-            addUTXOExplorerVisualization(to: scene)
+            addUTXOExplorerVisualization(to: rootEntity)
+        case .blockchain, .transaction, .utxo:
+            addBlockchainChain(to: rootEntity)
         }
-        
-        // Update camera position
-        updateCameraPosition()
     }
     
     // MARK: - Visualization Methods
     
-    private func addBlockchainChain(to scene: RealityKit.Scene) {
-        let chainAnchor = AnchorEntity()
+    private func addBlockchainChain(to parentEntity: Entity) {
+        let chainAnchor = Entity()
         chainAnchor.name = "blockchain_chain"
         
         for (index, block) in viewModel.blocks.enumerated() {
@@ -162,11 +149,11 @@ struct Blockchain3DView: View {
             }
         }
         
-        scene.addChild(chainAnchor)
+        parentEntity.addChild(chainAnchor)
     }
     
-    private func addMempoolVisualization(to scene: RealityKit.Scene) {
-        let mempoolAnchor = AnchorEntity()
+    private func addMempoolVisualization(to parentEntity: Entity) {
+        let mempoolAnchor = Entity()
         mempoolAnchor.name = "mempool_visualization"
         
         // Create a 3D scatter plot of mempool transactions
@@ -175,58 +162,58 @@ struct Blockchain3DView: View {
             mempoolAnchor.addChild(txEntity)
         }
         
-        scene.addChild(mempoolAnchor)
+        parentEntity.addChild(mempoolAnchor)
     }
     
-    private func addFeeMarketVisualization(to scene: RealityKit.Scene) {
-        let feeAnchor = AnchorEntity()
+    private func addFeeMarketVisualization(to parentEntity: Entity) {
+        let feeAnchor = Entity()
         feeAnchor.name = "fee_market_visualization"
         
         // Create 3D fee distribution chart
         let feeDistribution = viewModel.feeDistribution
         var yOffset: Float = 0
         
-        for (feeRange, count) in feeDistribution {
+        for (index, feeRate) in feeDistribution.enumerated() {
             let barEntity = createFeeBarEntity(
-                label: feeRange,
-                count: count,
+                label: "\(Int(feeRate))",
+                count: Int(feeRate * 100),
                 at: yOffset
             )
             feeAnchor.addChild(barEntity)
             yOffset += 0.5
         }
         
-        scene.addChild(feeAnchor)
+        parentEntity.addChild(feeAnchor)
     }
     
-    private func addBlockDetailVisualization(to scene: RealityKit.Scene) {
+    private func addBlockDetailVisualization(to parentEntity: Entity) {
         guard let selectedBlock = viewModel.selectedBlock else { return }
         
-        let detailAnchor = AnchorEntity()
+        let detailAnchor = Entity()
         detailAnchor.name = "block_detail_visualization"
         
         // Create detailed block visualization
         let blockDetailEntity = createDetailedBlockEntity(for: selectedBlock)
         detailAnchor.addChild(blockDetailEntity)
         
-        scene.addChild(detailAnchor)
+        parentEntity.addChild(detailAnchor)
     }
     
-    private func addTransactionDetailVisualization(to scene: RealityKit.Scene) {
+    private func addTransactionDetailVisualization(to parentEntity: Entity) {
         guard let selectedTransaction = viewModel.selectedTransaction else { return }
         
-        let detailAnchor = AnchorEntity()
+        let detailAnchor = Entity()
         detailAnchor.name = "transaction_detail_visualization"
         
         // Create transaction flow visualization
         let transactionFlowEntity = createTransactionFlowEntity(for: selectedTransaction)
         detailAnchor.addChild(transactionFlowEntity)
         
-        scene.addChild(detailAnchor)
+        parentEntity.addChild(detailAnchor)
     }
     
-    private func addUTXOExplorerVisualization(to scene: RealityKit.Scene) {
-        let utxoAnchor = AnchorEntity()
+    private func addUTXOExplorerVisualization(to parentEntity: Entity) {
+        let utxoAnchor = Entity()
         utxoAnchor.name = "utxo_explorer_visualization"
         
         // Create UTXO visualization
@@ -235,7 +222,7 @@ struct Blockchain3DView: View {
             utxoAnchor.addChild(utxoEntity)
         }
         
-        scene.addChild(utxoAnchor)
+        parentEntity.addChild(utxoAnchor)
     }
     
     // MARK: - Entity Creation
@@ -246,7 +233,19 @@ struct Blockchain3DView: View {
         
         // Create block geometry
         let mesh = MeshResource.generateBox(size: block.visualSize)
-        let material = SimpleMaterial(color: colorForFeeRate(block.feeRate), isMetallic: false)
+        var material = SimpleMaterial()
+        
+        // Extract RGB values from UIColor
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
+        colorForFeeRate(block.feeRate).getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+        
+        material.baseColor = .init(_colorLiteralRed: Float(red), 
+                                 green: Float(green), 
+                                 blue: Float(blue), 
+                                 alpha: Float(alpha))
         let modelEntity = ModelEntity(mesh: mesh, materials: [material])
         
         // Position block
@@ -267,7 +266,20 @@ struct Blockchain3DView: View {
         
         // Create transaction geometry
         let mesh = MeshResource.generateSphere(radius: transaction.visualSize)
-        let material = SimpleMaterial(color: colorForFeeRate(transaction.feeRate), isMetallic: true)
+        var material = SimpleMaterial()
+        
+        // Extract RGB values from UIColor
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
+        colorForFeeRate(transaction.feeRate).getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+        
+        material.baseColor = .init(_colorLiteralRed: Float(red), 
+                                 green: Float(green), 
+                                 blue: Float(blue), 
+                                 alpha: Float(alpha))
+        material.metallic = 1.0
         let modelEntity = ModelEntity(mesh: mesh, materials: [material])
         
         // Position in 3D space based on fee rate and size
@@ -287,7 +299,8 @@ struct Blockchain3DView: View {
         // Create bar geometry
         let height = Float(count) * 0.01
         let mesh = MeshResource.generateBox(size: [0.1, height, 0.1])
-        let material = SimpleMaterial(color: .blue, isMetallic: false)
+        var material = SimpleMaterial()
+        material.baseColor = .init(_colorLiteralRed: 0.0, green: 0.0, blue: 1.0, alpha: 1.0)
         let modelEntity = ModelEntity(mesh: mesh, materials: [material])
         
         entity.position = SIMD3<Float>(0, height / 2 + yOffset, 0)
@@ -307,7 +320,20 @@ struct Blockchain3DView: View {
         
         // Create larger block representation
         let mesh = MeshResource.generateBox(size: [0.5, 0.5, 0.5])
-        let material = SimpleMaterial(color: colorForFeeRate(block.feeRate), isMetallic: true)
+        var material = SimpleMaterial()
+        
+        // Extract RGB values from UIColor
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
+        colorForFeeRate(block.feeRate).getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+        
+        material.baseColor = .init(_colorLiteralRed: Float(red), 
+                                 green: Float(green), 
+                                 blue: Float(blue), 
+                                 alpha: Float(alpha))
+        material.metallic = 1.0
         let modelEntity = ModelEntity(mesh: mesh, materials: [material])
         
         entity.addChild(modelEntity)
@@ -363,7 +389,20 @@ struct Blockchain3DView: View {
         
         // Create UTXO geometry
         let mesh = MeshResource.generateSphere(radius: utxo.visualSize)
-        let material = SimpleMaterial(color: colorForValue(utxo.value), isMetallic: true)
+        var material = SimpleMaterial()
+        
+        // Extract RGB values from UIColor
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
+        colorForValue(utxo.value).getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+        
+        material.baseColor = .init(_colorLiteralRed: Float(red), 
+                                 green: Float(green), 
+                                 blue: Float(blue), 
+                                 alpha: Float(alpha))
+        material.metallic = 1.0
         let modelEntity = ModelEntity(mesh: mesh, materials: [material])
         
         // Position in grid
@@ -385,7 +424,19 @@ struct Blockchain3DView: View {
         let entity = Entity()
         
         let mesh = MeshResource.generateSphere(radius: 0.05)
-        let material = SimpleMaterial(color: color, isMetallic: false)
+        var material = SimpleMaterial()
+        
+        // Extract RGB values from UIColor
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
+        color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+        
+        material.baseColor = .init(_colorLiteralRed: Float(red), 
+                                 green: Float(green), 
+                                 blue: Float(blue), 
+                                 alpha: Float(alpha))
         let modelEntity = ModelEntity(mesh: mesh, materials: [material])
         
         entity.position = position
@@ -406,7 +457,8 @@ struct Blockchain3DView: View {
         let center = (from + to) / 2
         
         let mesh = MeshResource.generateBox(size: [0.02, 0.02, distance])
-        let material = SimpleMaterial(color: .gray, isMetallic: false)
+        var material = SimpleMaterial()
+        material.baseColor = .init(_colorLiteralRed: 0.5, green: 0.5, blue: 0.5, alpha: 1.0)
         let modelEntity = ModelEntity(mesh: mesh, materials: [material])
         
         entity.position = center
@@ -421,7 +473,8 @@ struct Blockchain3DView: View {
         
         // Create text mesh (simplified - in real implementation you'd use TextMeshResource)
         let mesh = MeshResource.generateBox(size: [size * Float(text.count) * 0.6, size, 0.01])
-        let material = SimpleMaterial(color: .white, isMetallic: false)
+        var material = SimpleMaterial()
+        material.baseColor = .init(_colorLiteralRed: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         let modelEntity = ModelEntity(mesh: mesh, materials: [material])
         
         entity.addChild(modelEntity)
@@ -452,14 +505,6 @@ struct Blockchain3DView: View {
             return .green
         } else {
             return .blue
-        }
-    }
-    
-    private func updateCameraPosition() {
-        guard let cameraAnchor = cameraAnchor else { return }
-        
-        withAnimation(.easeInOut(duration: 2.0)) {
-            cameraAnchor.position = viewModel.cameraPosition
         }
     }
     
