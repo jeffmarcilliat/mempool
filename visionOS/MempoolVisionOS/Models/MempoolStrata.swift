@@ -19,9 +19,3 @@ struct MempoolStrata: Identifiable, Codable {
         return Float(transactionCount) / 1000.0 * Float(averageFee) / 50.0
     }
 }
-
-struct MempoolData: Codable {
-    let strata: [MempoolStrata]
-    let totalTransactions: Int
-    let recommendedFees: RecommendedFees
-}

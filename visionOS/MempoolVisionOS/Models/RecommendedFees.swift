@@ -14,7 +14,7 @@ struct SearchResult: Identifiable, Codable {
     let title: String
     let subtitle: String
     
-    enum SearchResultType {
+    enum SearchResultType: String, Codable {
         case transaction
         case address
         case block
