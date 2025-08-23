@@ -1,0 +1,123 @@
+# Mempool Backend - Docker Compose Configuration
+# Supports both public mempool.space API and self-hosted Bitcoin node
+
+services:
+  # Self-hosted mempool backend for private Bitcoin node
+  mempool-backend:
+    image: mempool/backend:latest
+    container_name: mempool-backend
+    environment:
+      # Bitcoin Core RPC Configuration
+      CORE_RPC_HOST: "${BITCOIN_RPC_HOST:-172.27.0.1}"
+      CORE_RPC_PORT: "${BITCOIN_RPC_PORT:-8332}"
+      CORE_RPC_USERNAME: "${BITCOIN_RPC_USER:-mempool}"
+      CORE_RPC_PASSWORD: "${BITCOIN_RPC_PASSWORD:-mempool}"
+      
+      # Database Configuration
+      DATABASE_ENABLED: "true"
+      DATABASE_HOST: "mempool-db"
+      DATABASE_DATABASE: "mempool"
+      DATABASE_USERNAME: "mempool"
+      DATABASE_PASSWORD: "${DATABASE_PASSWORD:-mempool}"
+      
+      # Mempool Configuration
+      MEMPOOL_BACKEND: "electrum"
+      ELECTRUM_HOST: "${ELECTRUM_HOST:-127.0.0.1}"
+      ELECTRUM_PORT: "${ELECTRUM_PORT:-50002}"
+      ELECTRUM_TLS_ENABLED: "${ELECTRUM_TLS:-true}"
+      
+      # Network Configuration
+      MEMPOOL_NETWORK: "${NETWORK:-mainnet}"
+      MEMPOOL_HTTP_PORT: "8999"
+      MEMPOOL_SPAWN_CLUSTER_PROCS: "0"
+      
+      # Statistics and Features
+      STATISTICS_ENABLED: "true"
+      BISQ_ENABLED: "false"
+      LIQUID_ENABLED: "false"
+      
+      # Tor Configuration (optional)
+      TOR_PROXY_ENABLED: "${TOR_ENABLED:-false}"
+      TOR_PROXY_HOST: "${TOR_HOST:-127.0.0.1}"
+      TOR_PROXY_PORT: "${TOR_PORT:-9050}"
+      
+      # Performance Settings
+      MEMPOOL_CLEAR_PROTECTION_MINUTES: "20"
+      MEMPOOL_RECOMMENDED_FEE_PERCENTILE: "50"
+      MEMPOOL_BLOCK_WEIGHT_UNITS: "4000000"
+      
+      # Logging
+      LOG_LEVEL: "${LOG_LEVEL:-info}"
+      
+    ports:
+      - "${BACKEND_PORT:-8999}:8999"
+    volumes:
+      - mempool-cache:/backend/cache
+    depends_on:
+      - mempool-db
+    restart: unless-stopped
+    networks:
+      - mempool-network
+
+  # Database for mempool backend
+  mempool-db:
+    image: mariadb:10.11
+    container_name: mempool-db
+    environment:
+      MYSQL_DATABASE: "mempool"
+      MYSQL_USER: "mempool"
+      MYSQL_PASSWORD: "${DATABASE_PASSWORD:-mempool}"
+      MYSQL_ROOT_PASSWORD: "${DATABASE_ROOT_PASSWORD:-admin}"
+    volumes:
+      - mempool-db-data:/var/lib/mysql
+    restart: unless-stopped
+    networks:
+      - mempool-network
+    command: --default-authentication-plugin=mysql_native_password
+
+  # Frontend (optional - for web interface)
+  mempool-frontend:
+    image: mempool/frontend:latest
+    container_name: mempool-frontend
+    environment:
+      FRONTEND_HTTP_PORT: "8080"
+      BACKEND_MAINNET_HTTP_HOST: "mempool-backend"
+      BACKEND_MAINNET_HTTP_PORT: "8999"
+    ports:
+      - "${FRONTEND_PORT:-8080}:8080"
+    depends_on:
+      - mempool-backend
+    restart: unless-stopped
+    networks:
+      - mempool-network
+    profiles:
+      - web-interface
+
+  # Tor proxy (optional - for privacy)
+  tor-proxy:
+    image: dperson/torproxy:latest
+    container_name: mempool-tor
+    ports:
+      - "${TOR_SOCKS_PORT:-9050}:9050"
+      - "${TOR_CONTROL_PORT:-9051}:9051"
+    environment:
+      TOR_NewCircuitPeriod: "60"
+      TOR_MaxCircuitDirtiness: "300"
+    restart: unless-stopped
+    networks:
+      - mempool-network
+    profiles:
+      - tor
+
+volumes:
+  mempool-db-data:
+    driver: local
+  mempool-cache:
+    driver: local
+
+networks:
+  mempool-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.27.0.0/16

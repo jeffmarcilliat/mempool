@@ -37,25 +37,24 @@ struct BlockchainImmersiveView: View {
         
         print("🏗️ RealityView make: Root entity created and stored")
             
-            // Add bright lighting for crystal clear block visibility
-            let directionalLight = DirectionalLight()
-            directionalLight.look(at: SIMD3<Float>(0, 0, -1), from: SIMD3<Float>(2, 3, 2), relativeTo: nil)
-            directionalLight.light.intensity = 8.0  // Very bright for crystal clear visibility
-            directionalLight.light.color = .white
-            rootEntity.addChild(directionalLight)
             
-            // Add bright ambient light for overall illumination
-            let ambientLight = DirectionalLight() // Changed from AmbientLight to DirectionalLight
-            ambientLight.light.intensity = 2.0  // Brighter ambient for better content visibility
-            ambientLight.light.color = .white
-            rootEntity.addChild(ambientLight)
+            // TODO: Implement visionOS-compatible lighting when available
+            // let directionalLight = DirectionalLight()
+            // directionalLight.look(at: SIMD3<Float>(0, 0, -1), from: SIMD3<Float>(2, 3, 2), relativeTo: nil)
+            // directionalLight.light.intensity = 8.0  // Very bright for crystal clear visibility
+            // directionalLight.light.color = .white
+            // rootEntity.addChild(directionalLight)
             
-            // Add additional fill light from below for better content illumination
-            let fillLight = DirectionalLight()
-            fillLight.look(at: SIMD3<Float>(0, 1, 0), from: SIMD3<Float>(0, -2, 0), relativeTo: nil)
-            fillLight.light.intensity = 3.0  // Moderate fill light
-            fillLight.light.color = .white
-            rootEntity.addChild(fillLight)
+            // let ambientLight = DirectionalLight() // Changed from AmbientLight to DirectionalLight
+            // ambientLight.light.intensity = 2.0  // Brighter ambient for better content visibility
+            // ambientLight.light.color = .white
+            // rootEntity.addChild(ambientLight)
+            
+            // let fillLight = DirectionalLight()
+            // fillLight.look(at: SIMD3<Float>(0, 1, 0), from: SIMD3<Float>(0, -2, 0), relativeTo: nil)
+            // fillLight.light.intensity = 3.0  // Moderate fill light
+            // fillLight.light.color = .white
+            // rootEntity.addChild(fillLight)
             
                                    // Always show loading text initially - blocks will be added via update closure
                        let loadingEntity = ModelEntity(
@@ -727,7 +726,7 @@ struct BlockchainImmersiveView: View {
             selectedMaterial.color = .init(tint: .cyan)
             selectedMaterial.roughness = .init(floatLiteral: 0.1) // Very smooth for glass effect
             selectedMaterial.metallic = .init(floatLiteral: 0.0) // Non-metallic for transparency
-            selectedMaterial.faceCulling = .none // Render both sides
+            // selectedMaterial.faceCulling = .none // faceCulling unavailable in visionOS
             return selectedMaterial
         } else {
             // Crystal clear glass material - truly transparent for bright content visibility
@@ -736,7 +735,7 @@ struct BlockchainImmersiveView: View {
             clearMaterial.color = .init(tint: UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.1))
             clearMaterial.roughness = .init(floatLiteral: 0.05) // Very smooth for crystal clear effect
             clearMaterial.metallic = .init(floatLiteral: 0.0) // Non-metallic for transparency
-            clearMaterial.faceCulling = .none // Render both sides
+            // clearMaterial.faceCulling = .none // faceCulling unavailable in visionOS
             return clearMaterial
         }
     }
@@ -761,7 +760,7 @@ struct BlockchainImmersiveView: View {
         material.metallic = .init(floatLiteral: 0.0) // Non-metallic for stability
         
         // Ensure both sides of faces are rendered to prevent culling issues
-        material.faceCulling = .none
+        // material.faceCulling = .none // faceCulling unavailable in visionOS
         
         return material
     }
