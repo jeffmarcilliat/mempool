@@ -22,6 +22,11 @@
 		B1C2D3E4F5A67890123456789012346A /* MempoolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A67890123456789012346B /* MempoolView.swift */; };
 		B1C2D3E4F5A67890123456789012346C /* TransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A67890123456789012346D /* TransactionView.swift */; };
 		B1C2D3E4F5A67890123456789012346E /* UTXOView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A67890123456789012346F /* UTXOView.swift */; };
+		B1C2D3E4F5A67890123456789012348A /* MempoolStrata.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A678901234567890123485 /* MempoolStrata.swift */; };
+		B1C2D3E4F5A67890123456789012348B /* RecommendedFees.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A678901234567890123486 /* RecommendedFees.swift */; };
+		B1C2D3E4F5A67890123456789012348C /* FeePanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A678901234567890123487 /* FeePanelView.swift */; };
+		B1C2D3E4F5A67890123456789012348D /* SearchPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A678901234567890123488 /* SearchPanelView.swift */; };
+		B1C2D3E4F5A67890123456789012348E /* TransactionImmersiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A678901234567890123489 /* TransactionImmersiveView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +46,11 @@
 		B1C2D3E4F5A67890123456789012346D /* TransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionView.swift; sourceTree = "<group>"; };
 		B1C2D3E4F5A67890123456789012346F /* UTXOView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UTXOView.swift; sourceTree = "<group>"; };
 		B1C2D3E4F5A678901234567890123470 /* MempoolVisionOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MempoolVisionOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B1C2D3E4F5A678901234567890123485 /* MempoolStrata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MempoolStrata.swift; sourceTree = "<group>"; };
+		B1C2D3E4F5A678901234567890123486 /* RecommendedFees.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendedFees.swift; sourceTree = "<group>"; };
+		B1C2D3E4F5A678901234567890123487 /* FeePanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeePanelView.swift; sourceTree = "<group>"; };
+		B1C2D3E4F5A678901234567890123488 /* SearchPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPanelView.swift; sourceTree = "<group>"; };
+		B1C2D3E4F5A678901234567890123489 /* TransactionImmersiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionImmersiveView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +86,8 @@
 				B1C2D3E4F5A678901234567890123463 /* Block.swift */,
 				B1C2D3E4F5A678901234567890123465 /* Transaction.swift */,
 				B1C2D3E4F5A678901234567890123467 /* UTXO.swift */,
+				B1C2D3E4F5A678901234567890123485 /* MempoolStrata.swift */,
+				B1C2D3E4F5A678901234567890123486 /* RecommendedFees.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -89,6 +101,9 @@
 				B1C2D3E4F5A67890123456789012346B /* MempoolView.swift */,
 				B1C2D3E4F5A67890123456789012346D /* TransactionView.swift */,
 				B1C2D3E4F5A67890123456789012346F /* UTXOView.swift */,
+				B1C2D3E4F5A678901234567890123487 /* FeePanelView.swift */,
+				B1C2D3E4F5A678901234567890123488 /* SearchPanelView.swift */,
+				B1C2D3E4F5A678901234567890123489 /* TransactionImmersiveView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -223,6 +238,11 @@
 				B1C2D3E4F5A67890123456789012346E /* UTXOView.swift in Sources */,
 				B1C2D3E4F5A678901234567890123456 /* MempoolVisionOSApp.swift in Sources */,
 				00175B112E51571A003D45DF /* Blockchain3DView.swift in Sources */,
+				B1C2D3E4F5A67890123456789012348A /* MempoolStrata.swift in Sources */,
+				B1C2D3E4F5A67890123456789012348B /* RecommendedFees.swift in Sources */,
+				B1C2D3E4F5A67890123456789012348C /* FeePanelView.swift in Sources */,
+				B1C2D3E4F5A67890123456789012348D /* SearchPanelView.swift in Sources */,
+				B1C2D3E4F5A67890123456789012348E /* TransactionImmersiveView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
