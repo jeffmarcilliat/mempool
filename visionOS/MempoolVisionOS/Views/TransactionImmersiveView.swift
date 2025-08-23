@@ -40,8 +40,7 @@ struct TransactionImmersiveView: View {
     
     private func createInputEntity(input: Transaction.TransactionInput, index: Int) -> ModelEntity {
         let mesh = MeshResource.generateSphere(radius: 0.05)
-        var material = SimpleMaterial()
-        material.baseColor = .init(tint: .blue)
+        let material = SimpleMaterial(color: .blue, isMetallic: false)
         
         let entity = ModelEntity(mesh: mesh, materials: [material])
         entity.position = SIMD3<Float>(-0.5, Float(index) * 0.15, 0)
@@ -52,8 +51,7 @@ struct TransactionImmersiveView: View {
     
     private func createOutputEntity(output: Transaction.TransactionOutput, index: Int) -> ModelEntity {
         let mesh = MeshResource.generateSphere(radius: 0.05)
-        var material = SimpleMaterial()
-        material.baseColor = .init(tint: .green)
+        let material = SimpleMaterial(color: .green, isMetallic: false)
         
         let entity = ModelEntity(mesh: mesh, materials: [material])
         entity.position = SIMD3<Float>(0.5, Float(index) * 0.15, 0)
