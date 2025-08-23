@@ -273,7 +273,7 @@ struct BlockchainImmersiveView: View {
         print("🎲 Setting position...")
         // Position blocks with proper spacing - first block directly in front of user
         let baseX = Float(index) * 0.35  // Much more spacing horizontally 
-        let baseY = -0.1 + Float(index) * 0.03  // Start slightly below eye level, rise gradually
+        let baseY = 1.6 + Float(index) * 0.03  // Start at eye level (1.6m), rise gradually
         let baseZ = -0.6 - Float(index) * 0.08  // Start closer to user, then recede
         
         blockEntity.position = SIMD3<Float>(baseX, baseY, baseZ)
