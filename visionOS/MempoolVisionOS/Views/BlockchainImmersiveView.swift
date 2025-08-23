@@ -1101,10 +1101,10 @@ struct BlockchainImmersiveView: View {
         var material = SimpleMaterial()
         
         switch stratum.color {
-        case .red: material.baseColor = PhysicallyBasedMaterial.BaseColor(tint: .red)
-        case .orange: material.baseColor = PhysicallyBasedMaterial.BaseColor(tint: .orange)  
-        case .yellow: material.baseColor = PhysicallyBasedMaterial.BaseColor(tint: .yellow)
-        case .green: material.baseColor = PhysicallyBasedMaterial.BaseColor(tint: .green)
+        case .red: material.baseColor = .color(.red)
+        case .orange: material.baseColor = .color(.orange)  
+        case .yellow: material.baseColor = .color(.yellow)
+        case .green: material.baseColor = .color(.green)
         }
         
         material.roughness = 0.3
