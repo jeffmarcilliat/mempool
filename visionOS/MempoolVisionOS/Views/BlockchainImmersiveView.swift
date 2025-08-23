@@ -7,17 +7,21 @@ struct BlockchainImmersiveView: View {
     @StateObject private var viewModel = BlockchainViewModel()
     @State private var selectedBlockIndex: Int? = nil
     @State private var eyeTrackingTimer: Timer?
-    @State private var rootEntity: Entity? // Added for ray casting
-    @State private var lookedAtBlockIndex: Int? = nil // Track which block user is looking at
-    @State private var chainOffset: SIMD3<Float> = SIMD3<Float>(0, 0, 0) // Track chain position
-    @State private var baseChainDistance: Float = 0.0 // Base distance for depth control
-    @State private var isInteracting = false // Track if user is actively interacting
-    @State private var lastDragTranslation = CGSize.zero // Track last drag translation
-    @State private var chainVelocity: SIMD3<Float> = SIMD3<Float>(0, 0, 0) // Momentum velocity
-    @State private var decelerationTimer: Timer? // Timer to ease out momentum smoothly
-    @State private var lastDepthDeltaZ: Float = 0 // Last per-frame depth delta during pinch
-    @State private var lastDepthUpdateTime: TimeInterval = 0 // Timestamp of last pinch update
-    @State private var lastMagnificationValue: CGFloat = 1.0 // Previous pinch value for delta computation
+    @State private var rootEntity: Entity?
+    @State private var lookedAtBlockIndex: Int?
+    @State private var chainOffset: SIMD3<Float> = SIMD3<Float>(0, 0, 0)
+    @State private var baseChainDistance: Float = 0.0
+    @State private var isInteracting = false
+    @State private var lastDragTranslation = CGSize.zero
+    @State private var chainVelocity: SIMD3<Float> = SIMD3<Float>(0, 0, 0)
+    @State private var decelerationTimer: Timer?
+    @State private var lastDepthDeltaZ: Float = 0
+    @State private var lastDepthUpdateTime: TimeInterval = 0
+    @State private var lastMagnificationValue: CGFloat = 1.0
+    @State private var mempoolStrata: [MempoolStrata] = []
+    @State private var showMempoolView = false
+    @State private var mempoolEntity: Entity?
+    @State private var selectedStratum: MempoolStrata?
     
     // UI toggle for immersion style (Hashable for Picker)
     private enum ImmersionOption: String, CaseIterable, Hashable { case mixed, full }
@@ -135,27 +139,39 @@ struct BlockchainImmersiveView: View {
                 .padding(.vertical, 8)
                 .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 12))
             }
-            .offset(y: -200) // Position it above center, in front of user
+            .offset(y: -200)
+        }
+        .overlay(alignment: .topLeading) {
+            FeePanelView(viewModel: viewModel)
+                .offset(x: 50, y: 100)
+        }
+        .overlay(alignment: .topTrailing) {
+            SearchPanelView(viewModel: viewModel)
+                .offset(x: -50, y: 100)
         }
         .onAppear {
             print("🚀 BlockchainImmersiveView appeared - starting data load...")
-            startEyeTracking() // Start eye tracking
-            // Load real blockchain data
+            startEyeTracking()
             Task {
                 print("📡 Starting data load task...")
                 await viewModel.loadData()
+                viewModel.connectToRealTimeData()
                 print("🎯 Data load task completed. Blocks available: \(viewModel.blocks.count)")
                 
-                // Add a small delay to avoid state modification during view update
-                try? await Task.sleep(nanoseconds: 100_000_000) // 0.1 seconds
+                try? await Task.sleep(nanoseconds: 100_000_000)
                 
-                // Create block entities after data loads
                 await MainActor.run {
                     print("🎯 About to call createBlockEntities from MainActor")
                     print("🎯 Current blocks count: \(viewModel.blocks.count)")
                     print("🎯 Current rootEntity: \(rootEntity != nil ? "exists" : "nil")")
                     createBlockEntities()
                 }
+            }
+        }
+        .onReceive(viewModel.$mempoolStrata) { strata in
+            self.mempoolStrata = strata
+            if showMempoolView {
+                createMempoolStrataVisualization()
             }
         }
         .onChange(of: immersionOption) { _, newValue in
@@ -723,7 +739,7 @@ struct BlockchainImmersiveView: View {
         if selectedBlockIndex == index || lookedAtBlockIndex == index {
             // Selected or looked at block - bright cyan glow with crystal clear transparency
             var selectedMaterial = SimpleMaterial()
-            selectedMaterial.color = .init(tint: .cyan)
+            selectedMaterial.color = PhysicallyBasedMaterial.BaseColor(tint: .cyan)
             selectedMaterial.roughness = .init(floatLiteral: 0.1) // Very smooth for glass effect
             selectedMaterial.metallic = .init(floatLiteral: 0.0) // Non-metallic for transparency
             // selectedMaterial.faceCulling = .none // faceCulling unavailable in visionOS
@@ -732,7 +748,7 @@ struct BlockchainImmersiveView: View {
             // Crystal clear glass material - truly transparent for bright content visibility
             var clearMaterial = SimpleMaterial()
             // Use pure white with very low alpha for maximum transparency
-            clearMaterial.color = .init(tint: UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.1))
+            clearMaterial.color = PhysicallyBasedMaterial.BaseColor(tint: UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.1))
             clearMaterial.roughness = .init(floatLiteral: 0.05) // Very smooth for crystal clear effect
             clearMaterial.metallic = .init(floatLiteral: 0.0) // Non-metallic for transparency
             // clearMaterial.faceCulling = .none // faceCulling unavailable in visionOS
@@ -755,7 +771,7 @@ struct BlockchainImmersiveView: View {
         ]
         
         var material = SimpleMaterial()
-        material.color = .init(tint: colors[index % colors.count])
+        material.color = PhysicallyBasedMaterial.BaseColor(tint: colors[index % colors.count])
         material.roughness = .init(floatLiteral: 0.2) // Smoother for better light reflection
         material.metallic = .init(floatLiteral: 0.0) // Non-metallic for stability
         
@@ -1033,25 +1049,20 @@ struct BlockchainImmersiveView: View {
             guard let rootEntity = self.rootEntity else { return }
             let dt: Float = 1.0/120.0
             
-            // Integrate position
             chainOffset += chainVelocity * dt
             rootEntity.transform.translation = chainOffset
             
-            // Apply friction (higher for smoother, longer glide)
-            let friction: Float = 0.985
+            let friction: Float = 0.992
             chainVelocity *= friction
             
-            // Stop when sufficiently slow
             let speed = abs(chainVelocity.x) + abs(chainVelocity.y) + abs(chainVelocity.z)
-            if speed < 0.000003 {
-                // Snap to a small grid to avoid sub-pixel jitter on text meshes
-                let snapped = self.roundVector(self.chainOffset, step: 0.0005)
+            if speed < 0.000001 {
+                let snapped = self.roundVector(self.chainOffset, step: 0.0001)
                 self.chainOffset = snapped
                 rootEntity.transform.translation = snapped
                 self.decelerationTimer?.invalidate()
                 self.decelerationTimer = nil
                 self.isInteracting = false
-                // Persist new base Z for future pinches
                 self.baseChainDistance = self.chainOffset.z
             }
         }
@@ -1063,6 +1074,53 @@ struct BlockchainImmersiveView: View {
         chainVelocity = SIMD3<Float>(0, 0, 0)
     }
     
+    private func createMempoolStrataVisualization() {
+        guard let rootEntity = self.rootEntity else { return }
+        
+        mempoolEntity?.removeFromParent()
+        
+        let mempoolContainer = Entity()
+        mempoolContainer.name = "mempool_strata"
+        
+        for (index, stratum) in mempoolStrata.enumerated() {
+            let stratumEntity = createStratumEntity(stratum: stratum, index: index)
+            mempoolContainer.addChild(stratumEntity)
+        }
+        
+        mempoolContainer.position = SIMD3<Float>(-1.0, 0, -0.5)
+        rootEntity.addChild(mempoolContainer)
+        self.mempoolEntity = mempoolContainer
+    }
+    
+    private func createStratumEntity(stratum: MempoolStrata, index: Int) -> ModelEntity {
+        let height = max(0.05, stratum.visualHeight)
+        let width: Float = 0.3
+        let depth: Float = 0.3
+        
+        let mesh = MeshResource.generateBox(size: SIMD3<Float>(width, height, depth))
+        var material = SimpleMaterial()
+        
+        switch stratum.color {
+        case .red: material.baseColor = .color(.red)
+        case .orange: material.baseColor = .color(.orange)  
+        case .yellow: material.baseColor = .color(.yellow)
+        case .green: material.baseColor = .color(.green)
+        }
+        
+        material.roughness = 0.3
+        material.metallic = 0.1
+        
+        let entity = ModelEntity(mesh: mesh, materials: [material])
+        
+        let yOffset = Float(index) * 0.1 + height / 2
+        entity.position = SIMD3<Float>(0, yOffset, 0)
+        entity.name = "stratum_\(index)"
+        
+        entity.collision = CollisionComponent(shapes: [.generateBox(size: SIMD3<Float>(width, height, depth))])
+        entity.components.set(InputTargetComponent())
+        
+        return entity
+    }
 
 }
 
