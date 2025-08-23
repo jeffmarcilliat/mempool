@@ -1,0 +1,170 @@
+name: VisionOS Build and Test
+
+on:
+  push:
+    branches: [ main, jade ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-visionos:
+    name: Build VisionOS App
+    runs-on: macos-14
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Xcode
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: '15.4'
+        
+    - name: Cache Xcode derived data
+      uses: actions/cache@v3
+      with:
+        path: ~/Library/Developer/Xcode/DerivedData
+        key: ${{ runner.os }}-xcode-${{ hashFiles('**/project.pbxproj') }}
+        restore-keys: |
+          ${{ runner.os }}-xcode-
+          
+    - name: Build VisionOS App
+      run: |
+        cd visionOS
+        xcodebuild clean build \
+          -project MempoolVisionOS.xcodeproj \
+          -scheme MempoolVisionOS \
+          -destination 'platform=visionOS Simulator,name=Apple Vision Pro' \
+          -configuration Debug \
+          CODE_SIGNING_ALLOWED=NO
+          
+    - name: Run Swift Tests
+      run: |
+        cd visionOS
+        xcodebuild test \
+          -project MempoolVisionOS.xcodeproj \
+          -scheme MempoolVisionOS \
+          -destination 'platform=visionOS Simulator,name=Apple Vision Pro' \
+          CODE_SIGNING_ALLOWED=NO
+      continue-on-error: true
+      
+    - name: Archive for Distribution
+      if: github.ref == 'refs/heads/main'
+      run: |
+        cd visionOS
+        xcodebuild archive \
+          -project MempoolVisionOS.xcodeproj \
+          -scheme MempoolVisionOS \
+          -destination 'generic/platform=visionOS' \
+          -archivePath build/MempoolVisionOS.xcarchive \
+          CODE_SIGNING_ALLOWED=NO
+          
+    - name: Upload Build Artifacts
+      if: github.ref == 'refs/heads/main'
+      uses: actions/upload-artifact@v3
+      with:
+        name: visionos-archive
+        path: visionOS/build/MempoolVisionOS.xcarchive
+        retention-days: 30
+
+  test-backend:
+    name: Test Backend Configuration
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Docker Buildx
+      uses: docker/setup-buildx-action@v3
+      
+    - name: Test Backend Docker Compose
+      run: |
+        cd backend
+        # Validate compose file
+        docker-compose -f compose.yml config
+        
+        # Test that images can be pulled
+        docker-compose -f compose.yml pull --ignore-pull-failures
+        
+    - name: Validate Environment Configuration
+      run: |
+        cd backend
+        # Check that example env file has required variables
+        grep -q "BITCOIN_RPC_HOST" .env.example
+        grep -q "NETWORK" .env.example
+        grep -q "BACKEND_PORT" .env.example
+        
+  lint-and-validate:
+    name: Lint and Validate
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Validate Documentation
+      run: |
+        # Check that all required docs exist
+        test -f docs/ARCHITECTURE.md
+        test -f docs/DECISIONS.md
+        test -f docs/OPERATIONS.md
+        test -f docs/ISSUE_LOG.md
+        test -f docs/WEEKLY_REPORT.md
+        
+        # Check that README_SPEC.md quality gates are documented
+        grep -q "Foundations Gate" README_SPEC.md
+        grep -q "Interaction Gate" README_SPEC.md
+        grep -q "Completeness Gate" README_SPEC.md
+        grep -q "Polish Gate" README_SPEC.md
+        
+    - name: Validate License Compliance
+      run: |
+        # Check AGPL-3.0 license exists
+        test -f LICENSE
+        grep -q "GNU Affero General Public License" LICENSE
+        
+        # Check for proper attribution
+        grep -q "Mempool Open Source Project" LICENSE
+        
+    - name: Check VisionOS Project Structure
+      run: |
+        # Validate Xcode project exists
+        test -f visionOS/MempoolVisionOS.xcodeproj/project.pbxproj
+        
+        # Check key Swift files exist
+        test -f visionOS/MempoolVisionOS/MempoolVisionOSApp.swift
+        test -f visionOS/MempoolVisionOS/ContentView.swift
+        test -f visionOS/MempoolVisionOS/Services/MempoolService.swift
+        test -f visionOS/MempoolVisionOS/Models/Block.swift
+        
+    - name: Validate Backend Configuration
+      run: |
+        # Check backend files exist
+        test -f backend/compose.yml
+        test -f backend/.env.example
+        
+        # Validate Docker compose syntax
+        cd backend && docker-compose -f compose.yml config > /dev/null
+
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@master
+      with:
+        scan-type: 'fs'
+        scan-ref: '.'
+        format: 'sarif'
+        output: 'trivy-results.sarif'
+        
+    - name: Upload Trivy scan results
+      uses: github/codeql-action/upload-sarif@v2
+      if: always()
+      with:
+        sarif_file: 'trivy-results.sarif'
