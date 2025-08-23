@@ -82,17 +82,16 @@ struct Blockchain3DView: View {
         let rootEntity = Entity()
         rootEntity.name = "BlockchainRoot"
         
-        // Add lighting
-        let directionalLight = DirectionalLight()
-        directionalLight.light.intensity = 1000
-        directionalLight.position = SIMD3<Float>(5, 5, 5)
-        rootEntity.addChild(directionalLight)
         
-        // Add ambient light
-        let ambientLight = DirectionalLight()
-        ambientLight.light.intensity = 200
-        ambientLight.position = SIMD3<Float>(0, 1, 0)
-        rootEntity.addChild(ambientLight)
+        // let directionalLight = DirectionalLight()
+        // directionalLight.light.intensity = 1000
+        // directionalLight.position = SIMD3<Float>(5, 5, 5)
+        // rootEntity.addChild(directionalLight)
+        
+        // let ambientLight = DirectionalLight()
+        // ambientLight.light.intensity = 200
+        // ambientLight.position = SIMD3<Float>(0, 1, 0)
+        // rootEntity.addChild(ambientLight)
         
         // Store reference
         self.rootEntity = rootEntity
