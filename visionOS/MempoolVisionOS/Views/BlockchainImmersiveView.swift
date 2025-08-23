@@ -739,7 +739,7 @@ struct BlockchainImmersiveView: View {
         if selectedBlockIndex == index || lookedAtBlockIndex == index {
             // Selected or looked at block - bright cyan glow with crystal clear transparency
             var selectedMaterial = SimpleMaterial()
-            selectedMaterial.color = MaterialColorParameter(.cyan)
+            selectedMaterial.color = PhysicallyBasedMaterial.BaseColor(tint: .cyan)
             selectedMaterial.roughness = .init(floatLiteral: 0.1) // Very smooth for glass effect
             selectedMaterial.metallic = .init(floatLiteral: 0.0) // Non-metallic for transparency
             // selectedMaterial.faceCulling = .none // faceCulling unavailable in visionOS
@@ -748,7 +748,7 @@ struct BlockchainImmersiveView: View {
             // Crystal clear glass material - truly transparent for bright content visibility
             var clearMaterial = SimpleMaterial()
             // Use pure white with very low alpha for maximum transparency
-            clearMaterial.color = MaterialColorParameter(UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.1))
+            clearMaterial.color = PhysicallyBasedMaterial.BaseColor(tint: UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.1))
             clearMaterial.roughness = .init(floatLiteral: 0.05) // Very smooth for crystal clear effect
             clearMaterial.metallic = .init(floatLiteral: 0.0) // Non-metallic for transparency
             // clearMaterial.faceCulling = .none // faceCulling unavailable in visionOS
@@ -771,7 +771,7 @@ struct BlockchainImmersiveView: View {
         ]
         
         var material = SimpleMaterial()
-        material.color = MaterialColorParameter(colors[index % colors.count])
+        material.color = PhysicallyBasedMaterial.BaseColor(tint: colors[index % colors.count])
         material.roughness = .init(floatLiteral: 0.2) // Smoother for better light reflection
         material.metallic = .init(floatLiteral: 0.0) // Non-metallic for stability
         
@@ -1101,10 +1101,10 @@ struct BlockchainImmersiveView: View {
         var material = SimpleMaterial()
         
         switch stratum.color {
-        case .red: material.baseColor = MaterialColorParameter(.red)
-        case .orange: material.baseColor = MaterialColorParameter(.orange)  
-        case .yellow: material.baseColor = MaterialColorParameter(.yellow)
-        case .green: material.baseColor = MaterialColorParameter(.green)
+        case .red: material.baseColor = PhysicallyBasedMaterial.BaseColor(tint: .red)
+        case .orange: material.baseColor = PhysicallyBasedMaterial.BaseColor(tint: .orange)  
+        case .yellow: material.baseColor = PhysicallyBasedMaterial.BaseColor(tint: .yellow)
+        case .green: material.baseColor = PhysicallyBasedMaterial.BaseColor(tint: .green)
         }
         
         material.roughness = 0.3
