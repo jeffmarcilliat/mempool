@@ -6,35 +6,17 @@ struct MempoolVisionOSApp: App {
     @State private var immersionStyle: ImmersionStyle = .mixed
     
     var body: some Scene {
-        // Minimal window that automatically launches immersive space
-        WindowGroup(id: "LaunchWindow") {
-            LaunchView()
+        WindowGroup(id: "MainWindow") {
+            MainWindowView()
                 .environmentObject(blockchainViewModel)
         }
-        .defaultSize(width: 0.001, height: 0.001) // Nearly invisible
+        .defaultSize(width: 800, height: 600)
         
-        // Direct immersive space for the blockchain experience
+        // Immersive space for the blockchain experience
         ImmersiveSpace(id: "BlockchainSpace") {
             BlockchainImmersiveView(immersionStyle: $immersionStyle)
+                .environmentObject(blockchainViewModel)
         }
         .immersionStyle(selection: $immersionStyle, in: .mixed, .full)
-    }
-}
-
-struct LaunchView: View {
-    @Environment(\.openImmersiveSpace) private var openImmersiveSpace
-    @State private var hasLaunchedImmersive = false
-    
-    var body: some View {
-        Color.clear
-            .allowsHitTesting(false)
-            .onAppear {
-                if !hasLaunchedImmersive {
-                    hasLaunchedImmersive = true
-                    Task {
-                        await openImmersiveSpace(id: "BlockchainSpace")
-                    }
-                }
-            }
     }
 }

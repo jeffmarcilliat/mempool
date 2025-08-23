@@ -52,13 +52,14 @@
 - **Target Resolution**: Gate 2 completion
 
 #### ISSUE-006: Search Functionality Not Implemented
-- **Status**: Open
+- **Status**: Resolved
 - **Priority**: Medium
 - **Description**: No transaction/address search capability
 - **Impact**: Required feature for Completeness Gate
-- **Assigned**: Pending
+- **Assigned**: Completed
 - **Created**: 2025-08-23
-- **Target Resolution**: Gate 3 completion
+- **Resolved**: 2025-08-23
+- **Resolution**: Implemented SearchPanelView with full transaction/address search functionality
 
 ### Low Priority
 
@@ -82,7 +83,25 @@
 
 ## Resolved Issues
 
-*No resolved issues yet*
+#### ISSUE-006: Search Functionality Implementation ✅
+- **Resolved**: 2025-08-23
+- **Description**: Implemented comprehensive search functionality for transactions and addresses
+- **Solution**: Created SearchPanelView with real-time search and result handling
+
+#### ISSUE-009: UI Visibility Issue ✅
+- **Resolved**: 2025-08-23
+- **Description**: App launched directly into immersive space with nearly invisible window
+- **Solution**: Replaced minimal window with proper MainWindowView interface
+
+#### ISSUE-010: Self-hosting Configuration Missing ✅
+- **Resolved**: 2025-08-23
+- **Description**: No mechanism to switch between public and self-hosted backends
+- **Solution**: Implemented ConfigurationPanelView with endpoint switching and persistence
+
+#### ISSUE-011: Missing Test Coverage ✅
+- **Resolved**: 2025-08-23
+- **Description**: No unit tests for core functionality
+- **Solution**: Created comprehensive test suite covering all major components
 
 ## Blocked Issues
 

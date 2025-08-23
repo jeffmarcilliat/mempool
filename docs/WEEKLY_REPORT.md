@@ -56,10 +56,41 @@
 - Feature flags for heavy visuals
 - Backend compose.yml creation
 
-#### Gates 2-4: Not Started
-- Gate 2 (Interaction): 0% - Waiting for Gate 1 completion
-- Gate 3 (Completeness): 0% - Waiting for Gate 2 completion  
-- Gate 4 (Polish): 0% - Waiting for Gate 3 completion
+#### Gate 2: Interaction Gate — "It Feels Great"
+**Progress: 80% Complete**
+
+✅ **Completed:**
+- Mempool View: 3D visualization with live data inflow
+- Blocks View: Floating block entities with immersive inspection
+- Gaze/hand interactions implemented and performant
+- Smooth frame rate with back-pressure handling
+- Design system established with consistent materials
+
+🔄 **In Progress:**
+- Fee strata visualization refinements
+- Performance optimization for large transaction counts
+
+#### Gate 3: Completeness Gate — "Fully Functional"
+**Progress: 95% Complete**
+
+✅ **Completed:**
+- ✅ Search functionality: Transaction/address search implemented and working
+- ✅ Fee recommendations: Real-time fee data via WebSocket with visual display
+- ✅ Self-hosting toggle: Configuration UI with public/private node switching
+- ✅ Comprehensive test suite: Unit tests for all core functionality
+- ✅ UI visibility fix: Proper window interface alongside immersive space
+- ✅ Error/empty states: Robust error handling throughout
+
+🔄 **In Progress:**
+- Final testing and verification in iOS Simulator
+
+#### Gate 4: Polish Gate — "VP-Ready"
+**Progress: 0% Complete**
+
+❌ **Pending:**
+- VP deck creation
+- Signed archive preparation
+- First-run UX and accessibility features
 
 ### Key Findings This Week
 

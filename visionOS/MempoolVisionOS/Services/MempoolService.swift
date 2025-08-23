@@ -2,8 +2,17 @@ import Foundation
 import Combine
 
 class MempoolService: ObservableObject {
-    private let baseURL = "https://mempool.space/api/v1"
-    private let wsURL = "wss://mempool.space/api/v1/ws"
+    @Published var isUsingSelfHosted = false
+    @Published var selfHostedURL = "http://localhost:8999"
+    
+    private var baseURL: String {
+        isUsingSelfHosted ? "\(selfHostedURL)/api/v1" : "https://mempool.space/api/v1"
+    }
+    
+    private var wsURL: String {
+        isUsingSelfHosted ? "\(selfHostedURL.replacingOccurrences(of: "http://", with: "ws://").replacingOccurrences(of: "https://", with: "wss://"))/api/v1/ws" : "wss://mempool.space/api/v1/ws"
+    }
+    
     private var webSocketTask: URLSessionWebSocketTask?
     
     @Published var blocks: [Block] = []
@@ -275,5 +284,22 @@ class MempoolService: ObservableObject {
         webSocketTask?.cancel()
         webSocketTask = nil
         isConnectedToWebSocket = false
+    }
+    
+    func reconnectWithNewConfiguration() async {
+        disconnectWebSocket()
+        
+        try? await Task.sleep(nanoseconds: 500_000_000)
+        
+        connectWebSocket()
+    }
+    
+    init() {
+        loadConfiguration()
+    }
+    
+    private func loadConfiguration() {
+        isUsingSelfHosted = UserDefaults.standard.bool(forKey: "isUsingSelfHosted")
+        selfHostedURL = UserDefaults.standard.string(forKey: "selfHostedURL") ?? "http://localhost:8999"
     }
 }
