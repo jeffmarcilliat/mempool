@@ -1,8 +1,6 @@
 # Mempool Backend - Docker Compose Configuration
 # Supports both public mempool.space API and self-hosted Bitcoin node
 
-version: "3.8"
-
 services:
   # Self-hosted mempool backend for private Bitcoin node
   mempool-backend:
