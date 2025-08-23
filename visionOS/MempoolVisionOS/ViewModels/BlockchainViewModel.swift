@@ -20,6 +20,10 @@ class BlockchainViewModel: ObservableObject {
 
     private let mempoolService = MempoolService()
     private var cancellables = Set<AnyCancellable>()
+    
+    var mempoolServiceInstance: MempoolService {
+        return mempoolService
+    }
 
     enum ViewType {
         case blockchain
@@ -111,5 +115,26 @@ class BlockchainViewModel: ObservableObject {
             self.searchResults = results
         }
         return results
+    }
+    
+    func selectTransactionById(_ txId: String) async {
+        await MainActor.run {
+            self.currentView = .transaction
+        }
+    }
+    
+    func searchAddressTransactions(_ address: String) async {
+        await MainActor.run {
+            self.currentView = .blockchain
+        }
+    }
+    
+    func selectBlockByHeight(_ height: Int) async {
+        if let block = blocks.first(where: { $0.height == height }) {
+            await MainActor.run {
+                self.selectedBlock = block
+                self.currentView = .blockDetail
+            }
+        }
     }
 }

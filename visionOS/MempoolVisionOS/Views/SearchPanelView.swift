@@ -60,11 +60,17 @@ struct SearchPanelView: View {
     private func handleResultSelection(_ result: SearchResult) {
         switch result.type {
         case .transaction:
-            break
+            Task {
+                await viewModel.selectTransactionById(result.subtitle)
+            }
         case .address:
-            break
+            Task {
+                await viewModel.searchAddressTransactions(result.subtitle)
+            }
         case .block:
-            break
+            if let blockHeight = Int(result.subtitle) {
+                await viewModel.selectBlockByHeight(blockHeight)
+            }
         }
     }
 }
