@@ -1,6 +1,7 @@
 import Foundation
 import SwiftUI
 import RealityKit
+import Combine
 
 @MainActor
 class BlockchainViewModel: ObservableObject {
@@ -12,8 +13,13 @@ class BlockchainViewModel: ObservableObject {
     @Published var cameraPosition: SIMD3<Float> = SIMD3<Float>(0, 0, 5)
     @Published var feeDistribution: [Double] = []
     @Published var errorMessage: String?
+    @Published var mempoolStrata: [MempoolStrata] = []
+    @Published var recommendedFees: RecommendedFees?
+    @Published var isConnectedToWebSocket = false
+    @Published var searchResults: [SearchResult] = []
 
     private let mempoolService = MempoolService()
+    private var cancellables = Set<AnyCancellable>()
 
     enum ViewType {
         case blockchain
@@ -33,6 +39,23 @@ class BlockchainViewModel: ObservableObject {
 
     var mempoolTransactions: [Transaction] {
         mempoolService.mempoolTransactions
+    }
+    
+    init() {
+        mempoolService.$mempoolStrata
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.mempoolStrata, on: self)
+            .store(in: &cancellables)
+        
+        mempoolService.$recommendedFees
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.recommendedFees, on: self)
+            .store(in: &cancellables)
+        
+        mempoolService.$isConnectedToWebSocket
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.isConnectedToWebSocket, on: self)
+            .store(in: &cancellables)
     }
 
     func loadData() async {
@@ -76,5 +99,17 @@ class BlockchainViewModel: ObservableObject {
     
     func clearError() {
         errorMessage = nil
+    }
+    
+    func connectToRealTimeData() {
+        mempoolService.connectWebSocket()
+    }
+    
+    func searchTransactionOrAddress(_ query: String) async -> [SearchResult] {
+        let results = await mempoolService.searchTransactionOrAddress(query)
+        await MainActor.run {
+            self.searchResults = results
+        }
+        return results
     }
 }
